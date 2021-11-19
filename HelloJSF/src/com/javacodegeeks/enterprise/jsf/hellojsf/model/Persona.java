@@ -5,11 +5,6 @@ public class Persona {
 	private String nombre;
 	private int edad;
 	
-	public Persona() {
-		this.edad = 12;
-	}
-	
-	
 	public String getNombre() {
 		return nombre;
 	}

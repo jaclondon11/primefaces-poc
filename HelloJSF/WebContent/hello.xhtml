@@ -3,7 +3,8 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:f="http://java.sun.com/jsf/core"      
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
  
     <h:head>
         <title>First JSF Example</title>
@@ -12,19 +13,51 @@
     </h:head>
     <h:body>
     	<h3>JSF 2.2 Hello World Example</h3>
-    	<h:form>
+    	<h:form >
+    	
+    	<p:outputPanel id="formulario">
     		<h:outputLabel styleClass="titulo">What's your name?</h:outputLabel>
     		
-    	   <h:inputText size="15" maxlength="10" value="#{helloBean.persona.nombre}"
+    	   <p:inputText size="15" maxlength="10" value="#{helloBean.persona.nombre}"
     	   	requiredMessage="Nombre es requerido" 
     	   	required="true">
     	   		<f:validateLength minimum = "5" maximum = "10" />
-    	   	</h:inputText>
+    	   	</p:inputText>
     	   	
     	   	<h:outputLabel styleClass="titulo">What's your age?</h:outputLabel>
-    	   	<h:inputText size="15" maxlength="10" value="#{helloBean.persona.edad}" >
-    	   	</h:inputText>
-    	   <h:commandButton value="Welcome Me" action="welcome"></h:commandButton>
+    	   	<p:spinner value="#{helloBean.persona.edad}" min="0" max="150"/>
+    	   	
+    	  	<p:commandButton value="Guardar" icon="pi pi-save" 
+    	  		actionListener="#{helloBean.guardarPersona()}"
+    	  		update="formulario tablaPersona"
+    	  		> </p:commandButton>
+    	  		
+  		</p:outputPanel>
+  		
+  		
+  		<br/>
+  		
     	</h:form>
+    	
+    	
+    	<h:form id="tablaPersona">
+			<p:dataTable  var="persona" value="#{helloBean.personasList}">
+  			<p:column headerText="Nombre">
+  				<p:outputLabel value="#{persona.nombre}"/>
+  			</p:column>
+  			
+  			<p:column headerText="Edad">
+  				<h:outputLabel value="#{persona.edad}"/>
+  			</p:column>
+  			
+  			<p:column headerText="Acciones">
+  				<p:commandButton value="borrar"
+  					process="tablaPersona" 
+  					actionListener="#{helloBean.borrarPersona(persona)}" 
+  					update="tablaPersona"></p:commandButton>
+  			</p:column>
+  		</p:dataTable>    	
+    	</h:form>
+    	
     </h:body>
 </html>
